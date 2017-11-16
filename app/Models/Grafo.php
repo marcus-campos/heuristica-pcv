@@ -131,12 +131,12 @@ class Grafo
         foreach($arestas as $key => $value) {
             if(!array_key_exists($key, $visitados))
             {
-                foreach ($arestas as $k => $v)
-                {
-                    if(($value['i'] == $v['j'] and $value['j'] == $v['i']) and ($value['p'] < $v['p']))
-                        //TODO:terminar
+                $menorCaminho = null;
+                foreach ($arestas as $k => $v) {
+                    if ($value['i'] == $v['j'] and $v['p'] < $menorCaminho['p'])
+                        $menorCaminho = $v;
                 }
-                $visitados[] = $key;
+                $visitados[] = $menorCaminho;
             }
         }
     }
