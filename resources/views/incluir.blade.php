@@ -9,9 +9,13 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Incluir arestas</div>
                     <div class="panel-body">
-                        @if (isset($result))
+                        @if (isset($result) && $result === true)
                             <div class="alert alert-success">
                                 Aresta inserida com sucesso!
+                            </div>
+                        @elseif(isset($result) && $result === false)
+                            <div class="alert alert-danger">
+                                Ooops, não foi possível inserir esta aresta. Verifique se ela já não foi inserida antes.
                             </div>
                         @endif
                         <div class="form-group">

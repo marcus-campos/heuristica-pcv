@@ -1,7 +1,9 @@
 <?php
 
 
-Route::get('/', 'HomeController@index')->name('index');
+Route::get('/', function () {
+    return redirect()->to(route('aresta.incluir'));
+})->name('index');
 
 Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
     Route::get('incluir', function () {
@@ -22,6 +24,11 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
         $result = (new \App\Models\Grafo())->removerAresta($request->i, $request->j);
         return view('remover', compact('result'));
     })->name('remover');
+
+    Route::get('exibir', function () {
+        $data = (new \App\Models\Grafo())->arestas();
+        return view('exibir', compact('data'));
+    })->name('exibir');
 
     Route::get('reiniciar', function () {
         (new \App\Models\Grafo())->reiniciar();

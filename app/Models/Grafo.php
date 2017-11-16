@@ -7,21 +7,27 @@ use Illuminate\Support\Facades\Session;
 
 class Grafo
 {
-    private $grafo;
 
     public function __construct()
     {
-        if(\session()->get('grafo'))
-            $this->grafo = Session::get('grafo');
-        else
-            \session()->put('grafo', []);
+        if(!\session()->get('grafo'))
+            session()->put('grafo', []);
     }
 
+    /**
+     * @return mixed
+     */
     public function arestas()
     {
         return \session()->get('grafo');
     }
 
+    /**
+     * @param $i
+     * @param $j
+     * @param $p
+     * @return bool
+     */
     public function inserirAresta($i, $j, $p)
     {
         if(!$this->validaAresta($i, $j)) {
@@ -37,6 +43,11 @@ class Grafo
             return false;
     }
 
+    /**
+     * @param $i
+     * @param $j
+     * @return bool
+     */
     public function removerAresta($i, $j)
     {
         $removido = false;
@@ -54,19 +65,27 @@ class Grafo
         return $removido;
     }
 
+    /**
+     * @param $i
+     * @param $j
+     * @return bool
+     */
     private function validaAresta($i, $j)
     {
         $existe = false;
-        $grafo = \session()->get('grafo');
+        $arestas = \session()->get('grafo');
 
-        if($grafo)
-            foreach ($grafo as $key => $value)
-                if($value == $i or $value == $j)
+        if($arestas)
+            foreach ($arestas as $key => $value)
+                if($value['i'] == $i and $value['j'] == $j)
                     $existe = true;
 
         return $existe;
     }
 
+    /**
+     *
+     */
     public function reiniciar()
     {
         \session()->flush();

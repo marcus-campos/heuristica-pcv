@@ -46,9 +46,9 @@
                             <li><a href="{{ route('aresta.remover.index') }}">Remover aresta</a></li>
                             <li><a href="">Alterar peso de aresta</a></li>
                             <li><a href="{{ route('aresta.reiniciar') }}">Reiniciar grafo</a></li>
-                            <li><a href="">Exibir grafo</a></li>
+                            <li><a href="{{ route('aresta.exibir') }}">Exibir grafo</a></li>
                             <li><a href="">Executar o algoritmo determinado</a></li>
-                            <li><a href="">Sair</a></li>
+                            <li><a href="http://www.google.com">Sair</a></li>
                     </ul>
                 </div>
             </div>
