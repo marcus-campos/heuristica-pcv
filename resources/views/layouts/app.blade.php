@@ -44,7 +44,7 @@
                         <!-- Authentication Links -->
                             <li><a href="{{ route('aresta.index') }}">Incluir aresta</a></li>
                             <li><a href="{{ route('aresta.remover.index') }}">Remover aresta</a></li>
-                            <li><a href="">Alterar peso de aresta</a></li>
+                            <li><a href="{{ route('aresta.alterar.index') }}">Alterar peso de aresta</a></li>
                             <li><a href="{{ route('aresta.reiniciar') }}">Reiniciar grafo</a></li>
                             <li><a href="{{ route('aresta.exibir') }}">Exibir grafo</a></li>
                             <li><a href="">Executar o algoritmo determinado</a></li>

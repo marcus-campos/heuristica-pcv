@@ -15,7 +15,7 @@
                             </div>
                         @elseif(isset($result) && $result === false)
                             <div class="alert alert-danger">
-                                Ooops, não foi possível inserir esta aresta. Verifique se ela já não foi inserida antes.
+                                Ooops, não foi possível inserir essa aresta. Verifique se ela já não foi inserida antes.
                             </div>
                         @endif
                         <div class="form-group">

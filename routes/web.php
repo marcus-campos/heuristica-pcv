@@ -30,6 +30,21 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
         return view('exibir', compact('data'));
     })->name('exibir');
 
+    Route::get('alterar', function () {
+        $data = (new \App\Models\Grafo())->arestas();
+        return view('alterar', compact('data'));
+    })->name('alterar.index');
+
+    Route::get('alterar/{i}/{j}', function (\Illuminate\Http\Request $request) {
+        $formData = (new \App\Models\Grafo())->pegarAresta($request->i, $request->j);
+        return view('alterar', compact('formData'));
+    })->name('alterar.show');
+
+    Route::post('alterar', function (\Illuminate\Http\Request $request) {
+        $result = (new \App\Models\Grafo())->alterarPesoAresta($request->i, $request->j, $request->p);
+        return view('alterar', compact('result'));
+    })->name('alterar');
+
     Route::get('reiniciar', function () {
         (new \App\Models\Grafo())->reiniciar();
         return redirect()->to('/');
