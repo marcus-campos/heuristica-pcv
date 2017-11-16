@@ -123,14 +123,16 @@ class Grafo
         return $alterado;
     }
 
+    /**
+     * @return array
+     */
     public function pcv()
     {
         $visitados = [];
         $arestas = \session()->pull('grafo');
 
         foreach($arestas as $key => $value) {
-            if(!array_key_exists($key, $visitados))
-            {
+            if(!array_key_exists($key, $visitados)) {
                 $menorCaminho = null;
                 foreach ($arestas as $k => $v) {
                     if ($value['i'] == $v['j'] and $v['p'] < $menorCaminho['p'])
@@ -139,6 +141,8 @@ class Grafo
                 $visitados[] = $menorCaminho;
             }
         }
+
+        return $visitados;
     }
 
     /**

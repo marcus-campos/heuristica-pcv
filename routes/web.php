@@ -45,6 +45,11 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
         return view('alterar', compact('result'));
     })->name('alterar');
 
+    Route::get('pcv', function (\Illuminate\Http\Request $request) {
+        $data = (new \App\Models\Grafo())->pcv();
+        return view('pcv', compact('data'));
+    })->name('pcv');
+
     Route::get('reiniciar', function () {
         (new \App\Models\Grafo())->reiniciar();
         return redirect()->to('/');

@@ -47,7 +47,7 @@
                             <li><a href="{{ route('aresta.alterar.index') }}">Alterar peso de aresta</a></li>
                             <li><a href="{{ route('aresta.reiniciar') }}">Reiniciar grafo</a></li>
                             <li><a href="{{ route('aresta.exibir') }}">Exibir grafo</a></li>
-                            <li><a href="">Executar o algoritmo determinado</a></li>
+                            <li><a href="{{ route('aresta.pcv') }}">Menor caminho</a></li>
                             <li><a href="http://www.google.com">Sair</a></li>
                     </ul>
                 </div>
