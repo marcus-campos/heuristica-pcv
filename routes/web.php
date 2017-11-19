@@ -11,7 +11,7 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
     })->name('index');
 
     Route::post('incluir', function (\Illuminate\Http\Request $request) {
-        $result = (new \App\Models\Grafo())->inserirAresta($request->i, $request->j, $request->p);
+        $result = (new \App\Models\Grafo())->inserirAresta($request->i, $request->j, $request->p, $request->par);
         return view('incluir', compact('result'));
     })->name('incluir');
 
@@ -45,9 +45,9 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
         return view('alterar', compact('result'));
     })->name('alterar');
 
-    Route::get('pcv', function (\Illuminate\Http\Request $request) {
-        $data = (new \App\Models\Grafo())->pcv();
-        return view('pcv', compact('data'));
+    Route::get('pcv', function () {
+        $pcv = (new \App\Models\Grafo())->pcv();
+        return view('pcv', compact('pcv'));
     })->name('pcv');
 
     Route::get('reiniciar', function () {

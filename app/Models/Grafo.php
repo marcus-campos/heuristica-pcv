@@ -11,7 +11,7 @@ class Grafo
     public function __construct()
     {
         if(!\session()->get('grafo'))
-            session()->put('grafo', []);
+            \session()->put('grafo', []);
     }
 
     /**
@@ -26,20 +26,22 @@ class Grafo
      * @param $i
      * @param $j
      * @param $p
+     * @param $par
      * @return bool
      */
-    public function inserirAresta($i, $j, $p)
+    public function inserirAresta($i, $j, $p, $par)
     {
         if(!$this->validaAresta($i, $j)) {
+            if($par == 'on')
+                \session()->push('grafo',[
+                    'i' => $j,
+                    'j' => $i,
+                    'p' => $p
+                ]);
+
             \session()->push('grafo',[
                 'i' => $i,
                 'j' => $j,
-                'p' => $p
-            ]);
-
-            \session()->push('grafo',[
-                'i' => $j,
-                'j' => $i,
                 'p' => $p
             ]);
 
@@ -62,11 +64,6 @@ class Grafo
         foreach($arestas as $key => $value)
         {
             if($value['i'] == $i and $value['j'] == $j) {
-                unset($arestas[$key]);
-                $removido = true;
-            }
-
-            if($value['j'] == $i and $value['i'] == $j) {
                 unset($arestas[$key]);
                 $removido = true;
             }
@@ -105,15 +102,9 @@ class Grafo
     {
         $alterado = false;
         $arestas = \session()->pull('grafo');
-
         if(!$this->validaAresta($i, $j)) {
             foreach ($arestas as $key => $value) {
                 if ($value['i'] == $i and $value['j'] == $j) {
-                    $arestas[$key]['p'] = $p;
-                    $alterado = true;
-                }
-
-                if ($value['j'] == $i and $value['i'] == $j) {
                     $arestas[$key]['p'] = $p;
                     $alterado = true;
                 }
@@ -129,18 +120,13 @@ class Grafo
     public function pcv()
     {
         $visitados = [];
-        $arestas = \session()->pull('grafo');
+        $arestas = \session()->get('grafo');
 
-        foreach($arestas as $key => $value) {
-            if(!array_key_exists($key, $visitados)) {
-                $menorCaminho = null;
-                foreach ($arestas as $k => $v) {
-                    if ($value['i'] == $v['j'] and $v['p'] < $menorCaminho['p'])
-                        $menorCaminho = $v;
-                }
-                $visitados[] = $menorCaminho;
-            }
-        }
+        foreach($arestas as $key => $value)
+            if(!array_key_exists($key, $visitados))
+                foreach ($arestas as $k => $v)
+                    if ($value['i'] == $v['j'] and $v['p'] < $value['p'])
+                        $visitados[] = $v;
 
         return $visitados;
     }

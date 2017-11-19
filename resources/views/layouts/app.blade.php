@@ -12,6 +12,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style type="text/css" media="screen">
+        html, body, svg { width: 100%; height: 450px;}
+    </style>
 </head>
 <body>
     <div id="app">
@@ -45,9 +49,9 @@
                             <li><a href="{{ route('aresta.index') }}">Incluir aresta</a></li>
                             <li><a href="{{ route('aresta.remover.index') }}">Remover aresta</a></li>
                             <li><a href="{{ route('aresta.alterar.index') }}">Alterar peso de aresta</a></li>
-                            <li><a href="{{ route('aresta.reiniciar') }}">Reiniciar grafo</a></li>
                             <li><a href="{{ route('aresta.exibir') }}">Exibir grafo</a></li>
                             <li><a href="{{ route('aresta.pcv') }}">Menor caminho</a></li>
+                            <li><a href="{{ route('aresta.reiniciar') }}">Reiniciar grafo</a></li>
                             <li><a href="http://www.google.com">Sair</a></li>
                     </ul>
                 </div>
@@ -59,5 +63,25 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/vivagraph.min.js') }}"></script>
+    <script>
+        var graph = Viva.Graph.graph();
+        var layout = Viva.Graph.Layout.forceDirected(graph, {
+            gravity : -0.1
+        });
+
+        @if(count(\session('grafo')) > 0)
+            @foreach(\session('grafo') as $aresta)
+                graph.addLink({{ $aresta['i'] }}, {{ $aresta['j'] }});
+            @endforeach
+        @endif
+
+        // specify where it should be rendered:
+        var renderer = Viva.Graph.View.renderer(graph, {
+            container: document.getElementById('graphDiv'),
+            layout: layout
+        });
+        renderer.run();
+    </script>
 </body>
 </html>
