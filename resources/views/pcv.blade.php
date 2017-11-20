@@ -23,7 +23,7 @@
                             @if(isset($pcv) && count($pcv) > 0)
                                 @foreach($pcv as $aresta)
                                     <a class="list-group-item list-group-item-action">
-                                        I: {{$aresta['i']}}<br>J: {{$aresta['j']}}<br>Peso: {{$aresta['p']}}
+                                        {{$aresta['i']}} => {{$aresta['j']}} (Peso: {{$aresta['p']}})
                                     </a>
                                 @endforeach
                             @endif

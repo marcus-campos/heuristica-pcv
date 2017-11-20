@@ -14,7 +14,22 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <style type="text/css" media="screen">
-        html, body, svg { width: 100%; height: 450px;}
+        #graphDiv {
+            background-color: black;
+            top: 0;
+            left:0;
+            height: 450px;
+            width: 100%;
+            position: relative;
+            margin:0;
+            overflow: hidden;
+        }
+        .node-label {
+            position: absolute;
+            pointer-events: none;
+            color: white;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -66,22 +81,56 @@
     <script src="{{ asset('js/vivagraph.min.js') }}"></script>
     <script>
         var graph = Viva.Graph.graph();
-        var layout = Viva.Graph.Layout.forceDirected(graph, {
-            gravity : -0.1
-        });
-
         @if(count(\session('grafo')) > 0)
             @foreach(\session('grafo') as $aresta)
                 graph.addLink({{ $aresta['i'] }}, {{ $aresta['j'] }});
             @endforeach
         @endif
+        var container = document.getElementById('graphDiv');
+        var domLabels = generateDOMLabels(graph);
+        var layout = Viva.Graph.Layout.forceDirected(graph, {
+            gravity : -0.1
+        });
+        var graphics = Viva.Graph.View.webglGraphics();
+        graphics.placeNode(function(ui, pos) {
+            // This callback is called by the renderer before it updates
+            // node coordinate. We can use it to update corresponding DOM
+            // label position;
+            // we create a copy of layout position
+            var domPos = {
+                x: pos.x,
+                y: pos.y
+            };
+            // And ask graphics to transform it to DOM coordinates:
+            graphics.transformGraphToClientCoordinates(domPos);
+            // then move corresponding dom label to its own position:
+            var nodeId = ui.node.id;
+            var labelStyle = domLabels[nodeId].style;
+            labelStyle.left = domPos.x + 'px';
+            labelStyle.top = domPos.y + 'px';
+        });
 
         // specify where it should be rendered:
         var renderer = Viva.Graph.View.renderer(graph, {
             container: document.getElementById('graphDiv'),
+            graphics: graphics,
             layout: layout
         });
         renderer.run();
+        function generateDOMLabels(graph) {
+            // this will map node id into DOM element
+            var labels = Object.create(null);
+            graph.forEachNode(function(node) {
+                var label = document.createElement('span');
+                label.classList.add('node-label');
+                label.innerText = node.id;
+                labels[node.id] = label;
+                container.appendChild(label);
+            });
+            // NOTE: If your graph changes over time you will need to
+            // monitor graph changes and update DOM elements accordingly
+            return labels;
+        }
     </script>
 </body>
 </html>

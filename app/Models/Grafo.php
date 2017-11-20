@@ -122,13 +122,41 @@ class Grafo
         $visitados = [];
         $arestas = \session()->get('grafo');
 
-        foreach($arestas as $key => $value)
-            if(!array_key_exists($key, $visitados))
+        foreach($arestas as $key => $value) {
+            $estado = [];
+            if (!array_where($visitados, function ($visitado) use ($value) {
+                if ($value == $visitado)
+                    return true;
+                return false;
+            }))
                 foreach ($arestas as $k => $v)
-                    if ($value['i'] == $v['j'] and $v['p'] < $value['p'])
-                        $visitados[] = $v;
+                    if(empty($atual))
+                        if ($value['i'] == $v['j'] and $v['p'] < $value['p']) {
+                            $estado[] = $v;
+                            foreach ($estado as $item)
+                            {
+                                if ($v['i'] == $item['j'] and $item['p'] < $v['p'])
+                                    $visitados = $item;
+                            }
+                        }
+
+
+        }
 
         return $visitados;
+    }
+
+    /**
+     * @param $array
+     * @return array
+     */
+    private function arrayInvert($array)
+    {
+        return [
+            'i' => $array['j'],
+            'j' => $array['i'],
+            'p' => $array['p']
+        ];
     }
 
     /**
