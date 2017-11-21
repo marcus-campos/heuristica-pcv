@@ -46,9 +46,16 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
     })->name('alterar');
 
     Route::get('pcv', function () {
-        $pcv = (new \App\Models\Grafo())->pcv();
-        return view('pcv', compact('pcv'));
+        $pcv = (new \App\Models\Grafo())->pcv(1);
+        $data = (new \App\Models\Grafo())->arestas();
+        return view('pcv', compact('pcv', 'data'));
     })->name('pcv');
+
+    Route::post('pcv', function (\Illuminate\Http\Request $request) {
+        $pcv = (new \App\Models\Grafo())->pcv($request->verticeInicial);
+        $data = (new \App\Models\Grafo())->arestas();
+        return view('pcv', compact('pcv', 'data'));
+    })->name('pcv.vertice');
 
     Route::get('reiniciar', function () {
         (new \App\Models\Grafo())->reiniciar();

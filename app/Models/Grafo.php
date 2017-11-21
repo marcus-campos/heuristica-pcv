@@ -117,46 +117,70 @@ class Grafo
     /**
      * @return array
      */
-    public function pcv()
+    public function pcv($verticeInicial)
     {
         $visitados = [];
         $arestas = \session()->get('grafo');
+        $verticeAtual = $verticeInicial;
 
-        foreach($arestas as $key => $value) {
-            $estado = [];
-            if (!array_where($visitados, function ($visitado) use ($value) {
-                if ($value == $visitado)
-                    return true;
-                return false;
-            }))
-                foreach ($arestas as $k => $v)
-                    if(empty($atual))
-                        if ($value['i'] == $v['j'] and $v['p'] < $value['p']) {
-                            $estado[] = $v;
-                            foreach ($estado as $item)
-                            {
-                                if ($v['i'] == $item['j'] and $item['p'] < $v['p'])
-                                    $visitados = $item;
-                            }
-                        }
+        foreach ($arestas as $aresta) {
+            $ligacoes = array_where($arestas, function ($value) use ($verticeAtual, $visitados) {
+                if($value['i'] == $verticeAtual)
+                    return $value;
+            });
 
-
+            if(($visitado = $this->arestaMenorCusto($ligacoes, $visitados)) != null )
+                $visitados[] = $visitado;
+            $verticeAtual = array_last($visitados)['j'];
         }
+
+        $ligacoes = array_where($arestas, function ($value) use ($verticeAtual, $visitados) {
+            if($value['i'] == $verticeAtual)
+                return $value;
+        });
+
+        $visitado = $this->arestaMenorCusto($ligacoes, $visitados, $verticeInicial);
+
+        if($visitado != null )
+            $visitados[] = $visitado;
 
         return $visitados;
     }
 
     /**
      * @param $array
-     * @return array
+     * @param $visitados
+     * @return bool
      */
-    private function arrayInvert($array)
+    private function visitado($array, $visitados, $verticeInicial = null)
     {
-        return [
-            'i' => $array['j'],
-            'j' => $array['i'],
-            'p' => $array['p']
-        ];
+        foreach ($visitados as $visitado) {
+            if($verticeInicial != null and $array['j'] == $verticeInicial)
+                return false;
+            if ($visitado == $array or $visitado['i'] == $array['j'] or $visitado['i'] == $array['i'])
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * @param $array
+     * @return null
+     */
+    private function arestaMenorCusto($array, $visitados, $verticeInicial = null)
+    {
+        $ultimoValor = null;
+        $aresta = null;
+        foreach ($array as $key => $value) {
+            if ($ultimoValor == null and !$this->visitado($value, $visitados, $verticeInicial))
+                $ultimoValor = $value['p'];
+            if ($value['p'] <= $ultimoValor and !$this->visitado($value, $visitados, $verticeInicial)) {
+                $ultimoValor = $value['p'];
+                $aresta = $value;
+            }
+        }
+
+        return $aresta;
     }
 
     /**
