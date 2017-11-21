@@ -46,9 +46,9 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
     })->name('alterar');
 
     Route::get('pcv', function () {
-        $pcv = (new \App\Models\Grafo())->pcv(1);
         $data = (new \App\Models\Grafo())->arestas();
-        $verticeInicial = 1;
+        $verticeInicial = array_first($data)['i'];
+        $pcv = (new \App\Models\Grafo())->pcv($verticeInicial);
         return view('pcv', compact('pcv', 'data', 'verticeInicial'));
     })->name('pcv');
 
