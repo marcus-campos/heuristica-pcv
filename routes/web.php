@@ -48,13 +48,15 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
     Route::get('pcv', function () {
         $pcv = (new \App\Models\Grafo())->pcv(1);
         $data = (new \App\Models\Grafo())->arestas();
-        return view('pcv', compact('pcv', 'data'));
+        $verticeInicial = 1;
+        return view('pcv', compact('pcv', 'data', 'verticeInicial'));
     })->name('pcv');
 
     Route::post('pcv', function (\Illuminate\Http\Request $request) {
         $pcv = (new \App\Models\Grafo())->pcv($request->verticeInicial);
         $data = (new \App\Models\Grafo())->arestas();
-        return view('pcv', compact('pcv', 'data'));
+        $verticeInicial = $request->verticeInicial;
+        return view('pcv', compact('pcv', 'data', 'verticeInicial'));
     })->name('pcv.vertice');
 
     Route::get('reiniciar', function () {

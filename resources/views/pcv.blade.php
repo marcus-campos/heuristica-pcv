@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Determinar vertice inicial</div>
+                <div class="panel-heading">Determinar vertice inicial (Vertice inicial: {{$verticeInicial }})</div>
                 <div class="panel-body text-center">
                     <form method="post" action="{{route('aresta.pcv.vertice')}}">
                         {{ csrf_field() }}
