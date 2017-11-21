@@ -67,7 +67,7 @@
                             <li><a href="{{ route('aresta.exibir') }}">Exibir grafo</a></li>
                             <li><a href="{{ route('aresta.pcv') }}">Menor caminho</a></li>
                             <li><a href="{{ route('aresta.reiniciar') }}">Reiniciar grafo</a></li>
-                            <li><a href="http://www.google.com">Sair</a></li>
+                            <li><a href="{{ route('sair') }}">Sair</a></li>
                     </ul>
                 </div>
             </div>

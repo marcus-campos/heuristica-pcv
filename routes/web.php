@@ -5,6 +5,10 @@ Route::get('/', function () {
     return redirect()->to(route('aresta.incluir'));
 })->name('index');
 
+Route::get('sair', function () {
+    return view('welcome');
+})->name('sair');
+
 Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
     Route::get('incluir', function () {
         return view('incluir');
