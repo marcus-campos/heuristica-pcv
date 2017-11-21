@@ -168,6 +168,8 @@ return [
          * Package Service Providers...
          */
 
+        App\Providers\HttpsServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
