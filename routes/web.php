@@ -15,7 +15,7 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
     })->name('index');
 
     Route::post('incluir', function (\Illuminate\Http\Request $request) {
-        $result = (new \App\Models\Grafo())->inserirAresta($request->i, $request->j, $request->p, $request->par);
+        $result = (new \App\Models\Grafo())->inserirAresta($request->nomeI, $request->i, $request->nomeJ, $request->j, $request->p);
         return view('incluir', compact('result'));
     })->name('incluir');
 
@@ -67,4 +67,9 @@ Route::group(['prefix' => 'aresta', 'as' => 'aresta.'], function () {
         (new \App\Models\Grafo())->reiniciar();
         return redirect()->to('/');
     })->name('reiniciar');
+
+    Route::get('info/{value}', function ($value) {
+        $data = (new \App\Models\Grafo())->info($value);
+        return json_encode($data);
+    })->name('info');
 });

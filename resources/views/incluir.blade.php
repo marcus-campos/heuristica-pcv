@@ -18,21 +18,26 @@
                                 Ooops, não foi possível inserir essa aresta. Verifique se ela já não foi inserida antes.
                             </div>
                         @endif
+
+                        <div class="form-group">
+                            <label for="usr">Nome cidade (I):</label>
+                            <input type="text" class="form-control" name="nomeI" id="nomeI" required/>
+                        </div>
                         <div class="form-group">
                             <label for="usr">I:</label>
-                            <input type="text" class="form-control" name="i" required/>
+                            <input type="text" class="form-control" name="i" id="i" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="usr">Nome cidade (J):</label>
+                            <input type="text" class="form-control" name="nomeJ" id="nomeJ" required/>
                         </div>
                         <div class="form-group">
                             <label for="usr">J:</label>
-                            <input type="text" class="form-control" name="j" required/>
+                            <input type="text" class="form-control" name="j" id="j" required/>
                         </div>
                         <div class="form-group">
                             <label for="usr">Peso:</label>
                             <input type="text" class="form-control" name="p" required/>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" name="par" checked/>
-                            Incluir par
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit">Incluir</button>

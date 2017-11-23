@@ -19,6 +19,10 @@
                             </div>
                         @endif
                         <div class="form-group">
+                            <label for="usr">Cidade:</label>
+                            <input type="text" class="form-control" name="nome" value="{{ isset($formData['nome']) ? $formData['nome'] : '' }}" readonly="true"/>
+                        </div>
+                        <div class="form-group">
                             <label for="usr">I:</label>
                             <input type="text" class="form-control" name="i" value="{{ isset($formData['i']) ? $formData['i'] : '' }}" readonly="true"/>
                         </div>
@@ -38,19 +42,19 @@
             </form>
         </div>
     </div>
-    @if(!isset($formData['p']))
+@if(!isset($formData['p']) and !isset($result))
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <form action="{{ route('aresta.incluir') }}" method="post">
                 {{ csrf_field() }}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Editar aresta</div>
+                    <div class="panel-heading">Editar aresta (Altera o par)</div>
                     <div class="panel-body">
                         <div class="list-group">
                             @if(isset($data) && count($data) > 0)
                                 @foreach($data as $aresta)
                                     <a href="{{ route('aresta.alterar.show', ['i' => $aresta['i'], 'j' => $aresta['j']]) }}" class="list-group-item list-group-item-action">
-                                        I: {{$aresta['i']}}<br>J: {{$aresta['j']}}<br>Peso: {{$aresta['p']}}
+                                        Cidade: {{$aresta['nome']}} <br>I: {{$aresta['i']}}<br>J: {{$aresta['j']}}<br>Peso: {{$aresta['p']}}
                                     </a>
                                 @endforeach
                             @endif

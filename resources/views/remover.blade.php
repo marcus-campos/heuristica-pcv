@@ -7,18 +7,18 @@
             <form action="{{ route('aresta.incluir') }}" method="post">
                 {{ csrf_field() }}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Excluir arestas</div>
+                    <div class="panel-heading">Excluir arestas (Exclui o par)</div>
                     <div class="panel-body">
                         <div class="list-group">
-                            @if (isset($result) and $result === true)
+                            @if (isset($result))
                                 <div class="alert alert-success">
-                                    Aresta removida com sucesso! <a href="{{ route('aresta.remover.index') }}"> Voltar</a>
+                                    Arestas removidas com sucesso! <a href="{{ route('aresta.remover.index') }}"> Voltar</a>
                                 </div>
                             @endif
                             @if(isset($data) && count($data) > 0)
                                 @foreach($data as $aresta)
                                     <a href="{{ route('aresta.remover', ['i' => $aresta['i'], 'j' => $aresta['j']]) }}" class="list-group-item list-group-item-action">
-                                        I: {{$aresta['i']}}<br>J: {{$aresta['j']}}<br>Peso: {{$aresta['p']}}
+                                        Cidade: {{$aresta['nome']}} <br>I: {{$aresta['i']}}<br>J: {{$aresta['j']}}<br>Peso: {{$aresta['p']}}
                                     </a>
                                 @endforeach
                             @endif

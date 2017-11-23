@@ -23,25 +23,28 @@ class Grafo
     }
 
     /**
+     * @param $nomeI
      * @param $i
+     * @param $nomeJ
      * @param $j
      * @param $p
-     * @param $par
      * @return bool
      */
-    public function inserirAresta($i, $j, $p, $par)
+    public function inserirAresta($nomeI, $i, $nomeJ, $j, $p)
     {
         if(!$this->validaAresta($i, $j)) {
-            if($par == 'on')
-                \session()->push('grafo',[
-                    'i' => $j,
-                    'j' => $i,
-                    'p' => $p
-                ]);
 
             \session()->push('grafo',[
+                'nome' => $nomeI,
                 'i' => $i,
                 'j' => $j,
+                'p' => $p
+            ]);
+
+            \session()->push('grafo',[
+                'nome' => $nomeJ,
+                'i' => $j,
+                'j' => $i,
                 'p' => $p
             ]);
 
@@ -67,9 +70,14 @@ class Grafo
                 unset($arestas[$key]);
                 $removido = true;
             }
+
+            if($value['j'] == $i and $value['i'] == $j) {
+                unset($arestas[$key]);
+                $removido = true;
+            }
         }
 
-        session()->put('grafo', $arestas);
+        \session()->put('grafo', $arestas);
         return $removido;
     }
 
@@ -108,7 +116,13 @@ class Grafo
                     $arestas[$key]['p'] = $p;
                     $alterado = true;
                 }
+
+                if ($value['j'] == $i and $value['i'] == $j) {
+                    $arestas[$key]['p'] = $p;
+                    $alterado = true;
+                }
             }
+
             session()->put('grafo', $arestas);
         }
         return $alterado;
@@ -201,6 +215,23 @@ class Grafo
         return $existe;
     }
 
+    public function obterNome($j)
+    {
+        $arestas = \session()->get('grafo');
+        return array_first(array_where($arestas, function ($aresta) use ($j) {
+            if($aresta['i'] == $j)
+                return $aresta;
+        }))['nome'];
+    }
+
+    public function info($value)
+    {
+        $arestas = \session()->get('grafo');
+        return array_first(array_where($arestas, function ($aresta) use ($value) {
+            if($aresta['i'] == $value)
+                return $aresta;
+        }));
+    }
     /**
      *
      */

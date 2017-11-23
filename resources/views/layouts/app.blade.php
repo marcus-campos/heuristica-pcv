@@ -77,8 +77,38 @@
     </div>
 
     <!-- Scripts -->
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/vivagraph.min.js') }}"></script>
+    <script>
+        function searchAndPlace (value, type) {
+            $.ajax({
+                url: window.location.origin + '/aresta/info/'+value,
+                type: 'GET',
+                success: function (resp) {
+                    var result = JSON.parse(resp);
+                    if(type === 'i') {
+                        $('#nomeI').val(result['nome']);
+                        $('#i').val();
+                    }
+
+                    if(type === 'j'){
+                        $('#nomeJ').val(result['nome']);
+                        $('#j').val(result['i']);
+                    }
+                }
+            });
+        }
+
+        //Events
+        $(document).on("blur", "#i", function () {
+            searchAndPlace($('#i').val(), 'i');
+        });
+
+        $(document).on("blur", "#j", function () {
+            searchAndPlace($('#j').val(), 'j');
+        });
+    </script>
     <script>
         var graph = Viva.Graph.graph();
         @if(count(\session('grafo')) > 0)
@@ -120,10 +150,16 @@
         function generateDOMLabels(graph) {
             // this will map node id into DOM element
             var labels = Object.create(null);
+            var nomes = [];
+            @if(count(\session('grafo')) > 0)
+                @foreach(\session('grafo') as $aresta)
+                    nomes.push('{{$aresta['nome']}}');
+                @endforeach
+            @endif
             graph.forEachNode(function(node) {
                 var label = document.createElement('span');
                 label.classList.add('node-label');
-                label.innerText = node.id;
+                label.innerText = nomes[node.id] + ' (' + node.id + ')';
                 labels[node.id] = label;
                 container.appendChild(label);
             });
