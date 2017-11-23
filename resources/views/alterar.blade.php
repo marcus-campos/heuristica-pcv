@@ -48,7 +48,7 @@
             <form action="{{ route('aresta.incluir') }}" method="post">
                 {{ csrf_field() }}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Editar aresta (Altera o par)</div>
+                    <div class="panel-heading">Editar aresta (Clique para alterar) (Altera o par)</div>
                     <div class="panel-body">
                         <div class="list-group">
                             @if(isset($data) && count($data) > 0)

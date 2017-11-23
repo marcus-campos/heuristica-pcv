@@ -7,7 +7,7 @@
             <form action="{{ route('aresta.incluir') }}" method="post">
                 {{ csrf_field() }}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Excluir arestas (Exclui o par)</div>
+                    <div class="panel-heading">Excluir arestas (Clique para remover) (Exclui o par)</div>
                     <div class="panel-body">
                         <div class="list-group">
                             @if (isset($result))
