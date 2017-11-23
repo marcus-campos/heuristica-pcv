@@ -159,7 +159,7 @@
             graph.forEachNode(function(node) {
                 var label = document.createElement('span');
                 label.classList.add('node-label');
-                label.innerText = nomes[node.id] + ' (' + node.id + ')';
+                label.innerText = nomes[node.id - 1] + ' (' + node.id + ')';
                 labels[node.id] = label;
                 container.appendChild(label);
             });

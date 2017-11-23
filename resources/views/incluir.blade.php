@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label for="usr">I:</label>
-                            <input type="text" class="form-control" name="i" id="i" required/>
+                            <input type="text" class="form-control" name="i" id="i" placeholder="Caso já cadastrado, digite o número do vertice a carregado." required/>
                         </div>
                         <div class="form-group">
                             <label for="usr">Nome cidade (J):</label>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label for="usr">J:</label>
-                            <input type="text" class="form-control" name="j" id="j" required/>
+                            <input type="text" class="form-control" name="j" id="j"  placeholder="Caso já cadastrado, digite o número do vertice a carregado." required/>
                         </div>
                         <div class="form-group">
                             <label for="usr">Peso:</label>
