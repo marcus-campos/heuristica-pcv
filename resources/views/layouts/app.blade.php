@@ -150,12 +150,24 @@
         function generateDOMLabels(graph) {
             // this will map node id into DOM element
             var labels = Object.create(null);
-            var nomes = null;
+            var nomes = [];
+            @php
+               $nomes = [];
+            @endphp
             @if(count(\session('grafo')) > 0)
                 @foreach(\session('grafo') as $aresta)
-                    nomes.push('{{$aresta['nome']}}');
+                    @if(array_first(array_where($nomes, function ($nome) use($aresta) {
+                        if($nome == $aresta['nome'])
+                            return $aresta['nome'];
+                    })) != $aresta['nome'])
+                        nomes.push('{{$aresta['nome']}}');
+                    @endif
+                    @php $nomes[] = $aresta['nome']@endphp
                 @endforeach
             @endif
+
+            console.log(nomes);
+
             graph.forEachNode(function(node) {
                 var label = document.createElement('span');
                 label.classList.add('node-label');
