@@ -150,7 +150,7 @@
         function generateDOMLabels(graph) {
             // this will map node id into DOM element
             var labels = Object.create(null);
-            var nomes = [];
+            var nomes = null;
             @if(count(\session('grafo')) > 0)
                 @foreach(\session('grafo') as $aresta)
                     nomes.push('{{$aresta['nome']}}');
