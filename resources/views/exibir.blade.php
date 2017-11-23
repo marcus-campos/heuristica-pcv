@@ -23,7 +23,7 @@
                             @if(isset($data) && count($data) > 0)
                                 @foreach($data as $aresta)
                                     <a class="list-group-item list-group-item-action">
-                                        Cidade: {{$aresta['nome']}} <br>I: {{$aresta['i']}}<br>J: {{$aresta['j']}}<br>Peso: {{$aresta['p']}}
+                                        Cidade: {{$aresta['nome']}}<br>I: {{$aresta['i']}} &nbsp &nbsp J: {{$aresta['j']}} &nbsp &nbsp Peso: {{$aresta['p']}}<br>Ligação: {{$aresta['nome']}} => {{ (new \App\Models\Grafo())->obterNome($aresta['j'])}}
                                     </a>
                                 @endforeach
                             @endif
